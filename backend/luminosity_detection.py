@@ -14,7 +14,6 @@ def extract_luminosity_data(file_name, interval):
             hsv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
             interval_vals.append(cv2.mean(hsv_image)[2])
             timestamp = math.floor(cap.get(cv2.CAP_PROP_POS_MSEC) / 1000)
-            print(timestamp)
             if timestamp > 0 and timestamp % interval == 0 and timestamp not in all_vals.timestamp.values:
                 all_vals.loc[insert_counter] = [timestamp, mean(interval_vals)]
                 insert_counter += 1

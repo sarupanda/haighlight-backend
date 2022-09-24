@@ -15,7 +15,7 @@ matplotlib==3.6.0
 moviepy==1.0.3
 numpy==1.23.3
 packaging==21.3
-pandas==1.5.5
+pandas==1.5.0
 Pillow==9.2.0
 proglog==0.1.10
 pycparser==2.21
