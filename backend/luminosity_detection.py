@@ -20,6 +20,4 @@ def extract_luminosity_data(file_name, interval):
                 interval_vals = []
         else:
             break
-    return all_vals
-
-extract_luminosity_data('test_low_res.mp4', 5)
+    return all_vals.set_index('timestamp')

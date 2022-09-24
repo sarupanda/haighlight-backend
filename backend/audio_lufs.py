@@ -35,11 +35,7 @@ def extractLufs(audio_filepath, interval_seconds):
     lufs = lufs.rolling(10).mean()
     return lufs
 
-if __name__ == '__main__':
-    audio_filepath = extractAudio('no_mercy.mp4')
-    interval_seconds = 10
+def extractLufsFromVideo(video_filepath, interval_seconds):
+    audio_filepath = extractAudio(video_filepath)
     lufs = extractLufs(audio_filepath, interval_seconds)
-    plt.plot(lufs)
-    plt.ylabel('some numbers')
-    plt.show()
-    print(lufs)
+    return lufs
