@@ -20,4 +20,4 @@ def extract_luminosity_data(file_name, interval):
                 interval_vals = []
         else:
             break
-    return all_vals.set_index('timestamp')
+    return all_vals.set_index('timestamp').rolling(10).mean()
