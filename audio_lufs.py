@@ -4,8 +4,10 @@ import pyloudnorm as pyln
 import os
 import logging
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-logging.basicConfig(level='DEBUG')
+logging.basicConfig(level='INFO')
 log = logging.getLogger(__name__)
 
 def extractAudio(filepath):
@@ -24,15 +26,20 @@ def extractLufs(audio_filepath, interval_seconds):
     log.debug('reading soundfile')
     data, rate = sf.read(audio_filepath)
     data_chunks = np.array_split(data, len(data) // (rate * interval_seconds))
+    meter = pyln.Meter(rate)
     lufs = []
     for chunk in data_chunks:
-        meter = pyln.Meter(rate)
         loudness = meter.integrated_loudness(chunk)
         lufs.append(loudness)
+    lufs = pd.DataFrame(lufs, columns=['lufs'], index=list(range(0, len(data_chunks) * interval_seconds, interval_seconds)))
+    lufs = lufs.rolling(10).mean()
     return lufs
 
 if __name__ == '__main__':
     audio_filepath = extractAudio('no_mercy.mp4')
-    interval_seconds = 5
+    interval_seconds = 10
     lufs = extractLufs(audio_filepath, interval_seconds)
-    print(len(lufs))
+    plt.plot(lufs)
+    plt.ylabel('some numbers')
+    plt.show()
+    print(lufs)
