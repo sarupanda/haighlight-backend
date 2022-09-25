@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 def extractAudio(filepath):
     log.debug('extracting audio')
-    filename = ''.join(filepath.split('.')[:-1])
+    filename = filepath.split('://')[-1]
     audio_filepath = f'{filename}.wav'
     if os.path.exists(audio_filepath):
         log.info(f'{audio_filepath} already exists, skipping extracting audio')
